@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import { UserController } from "../../controllers/user.controller";
+import { UserController } from "../../controllers/user.controller.js";
 import { zValidator } from "@hono/zod-validator";
-import { userIdParamSchema } from "../../schemas/user.schema";
+import { userIdParamSchema } from "../../schemas/user.schema.js";
 
 export const getUserRoute = (controller: UserController) => {
   const router = new Hono();

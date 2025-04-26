@@ -1,10 +1,10 @@
 import { Hono } from "hono";
-import { UserController } from "../../controllers/user.controller";
-import { getUsersRoute } from "./get-users.route";
-import { getUserRoute } from "./get-user.route";
-import { createUserRoute } from "./create-user.route";
-import { updateUserRoute } from "./update-user.route";
-import { deleteUserRoute } from "./delete-user.route";
+import { UserController } from "../../controllers/user.controller.js";
+import { getUsersRoute } from "./get-users.route.js";
+import { getUserRoute } from "./get-user.route.js";
+import { createUserRoute } from "./create-user.route.js";
+import { updateUserRoute } from "./update-user.route.js";
+import { deleteUserRoute } from "./delete-user.route.js";
 
 export const createUserRoutes = (controller: UserController) => {
   const router = new Hono();

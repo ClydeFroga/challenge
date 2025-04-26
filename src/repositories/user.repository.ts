@@ -1,5 +1,10 @@
-import { DatabaseConnection } from "../config/types";
-import { User, UserCreateDTO, UserUpdateDTO, UserFilters } from "../types/user";
+import { DatabaseConnection } from "../config/types.js";
+import {
+  User,
+  UserCreateDTO,
+  UserUpdateDTO,
+  UserFilters,
+} from "../types/user.js";
 
 export class UserRepository {
   constructor(private readonly db: DatabaseConnection) {}

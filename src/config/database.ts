@@ -1,5 +1,5 @@
 import mariadb from "mariadb";
-import { DatabaseConfig, DatabaseConnection } from "./types";
+import { DatabaseConfig, DatabaseConnection } from "./types.js";
 import dotenv from "dotenv";
 
 dotenv.config();

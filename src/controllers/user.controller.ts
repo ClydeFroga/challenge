@@ -1,13 +1,39 @@
 import { Context } from "hono";
-import { UserRepository } from "../repositories/user.repository";
-import { User, UserCreateDTO, UserUpdateDTO, UserFilters } from "../types/user";
-import { CreateUserSchema, UserIdParamSchema } from "../schemas/user.schema";
-import { ErrorHandler } from "../utils/error-handler";
+import { UserRepository } from "../repositories/user.repository.js";
+import {
+  User,
+  UserCreateDTO,
+  UserUpdateDTO,
+  UserFilters,
+} from "../types/user.js";
+import { CreateUserSchema } from "../schemas/user.schema.js";
+import { ErrorHandler } from "../utils/error-handler.js";
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async getAllUsers(c: Context) {
+  async getAllUsers(
+    c: Context<
+      {},
+      "/",
+      {
+        in: {
+          query: {
+            full_name?: string | undefined;
+            role?: string | undefined;
+            efficiency?: string | undefined;
+          };
+        };
+        out: {
+          query: {
+            full_name?: string | undefined;
+            role?: string | undefined;
+            efficiency?: number | undefined;
+          };
+        };
+      }
+    >
+  ) {
     try {
       const filters = c.req.valid("query") as UserFilters;
 
@@ -18,7 +44,24 @@ export class UserController {
     }
   }
 
-  async getUserById(c: Context) {
+  async getUserById(
+    c: Context<
+      {},
+      "/",
+      {
+        in: {
+          param: {
+            id: string;
+          };
+        };
+        out: {
+          param: {
+            id: number;
+          };
+        };
+      }
+    >
+  ) {
     try {
       const { id } = c.req.valid("param");
       const user = await this.userRepository.findById(id);
@@ -34,7 +77,28 @@ export class UserController {
     }
   }
 
-  async createUser(c: Context) {
+  async createUser(
+    c: Context<
+      {},
+      "/",
+      {
+        in: {
+          json: {
+            full_name: string;
+            role: string;
+            efficiency: number;
+          };
+        };
+        out: {
+          json: {
+            full_name: string;
+            role: string;
+            efficiency: number;
+          };
+        };
+      }
+    >
+  ) {
     try {
       const validatedData = c.req.valid("json") as CreateUserSchema;
 
@@ -51,7 +115,39 @@ export class UserController {
     }
   }
 
-  async updateUser(c: Context) {
+  async updateUser(
+    c: Context<
+      {},
+      "/",
+      {
+        in: {
+          param: {
+            id: string;
+          };
+        };
+        out: {
+          param: {
+            id: number;
+          };
+        };
+      } & {
+        in: {
+          json: {
+            full_name?: string | undefined;
+            role?: string | undefined;
+            efficiency?: number | undefined;
+          };
+        };
+        out: {
+          json: {
+            full_name?: string | undefined;
+            role?: string | undefined;
+            efficiency?: number | undefined;
+          };
+        };
+      }
+    >
+  ) {
     try {
       const { id } = c.req.valid("param");
       const userData = c.req.valid("json") as UserUpdateDTO;
@@ -67,7 +163,24 @@ export class UserController {
     }
   }
 
-  async deleteUser(c: Context) {
+  async deleteUser(
+    c: Context<
+      {},
+      "/",
+      {
+        in: {
+          param: {
+            id: string;
+          };
+        };
+        out: {
+          param: {
+            id: number;
+          };
+        };
+      }
+    >
+  ) {
     try {
       const { id } = c.req.valid("param");
       const user = await this.userRepository.delete(id);
