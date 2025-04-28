@@ -5,6 +5,7 @@ import { getUserRoute } from "./get-user.route.js";
 import { createUserRoute } from "./create-user.route.js";
 import { updateUserRoute } from "./update-user.route.js";
 import { deleteUserRoute } from "./delete-user.route.js";
+import { deleteAllUserRoute } from "./delete-all-user.route.js";
 
 export const createUserRoutes = (controller: UserController) => {
   const router = new Hono();
@@ -14,7 +15,7 @@ export const createUserRoutes = (controller: UserController) => {
   router.route("/create", createUserRoute(controller));
   router.route("/update/:id", updateUserRoute(controller));
   router.route("/delete/:id", deleteUserRoute(controller));
-  router.route("/delete", deleteUserRoute(controller));
+  router.route("/delete", deleteAllUserRoute(controller));
 
   return router;
 };
