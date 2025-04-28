@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import { UserController } from "../../controllers/user.controller.js";
-import { zValidator } from "@hono/zod-validator";
 import {
   updateUserSchema,
   userIdParamSchema,
+  zValidatorCustom,
 } from "../../schemas/user.schema.js";
 
 export const updateUserRoute = (controller: UserController) => {
@@ -11,8 +11,8 @@ export const updateUserRoute = (controller: UserController) => {
 
   router.patch(
     "/",
-    zValidator("param", userIdParamSchema),
-    zValidator("json", updateUserSchema),
+    zValidatorCustom("param", userIdParamSchema),
+    zValidatorCustom("json", updateUserSchema),
     (c) => controller.updateUser(c)
   );
 

@@ -1,4 +1,25 @@
-import { z } from "zod";
+import { HTTPException } from "hono/http-exception";
+import { z, ZodSchema } from "zod";
+import { zValidator as zv } from "@hono/zod-validator";
+import { ValidationTargets } from "hono";
+
+export const zValidatorCustom = <
+  T extends ZodSchema,
+  Target extends keyof ValidationTargets
+>(
+  target: Target,
+  schema: T
+) =>
+  zv(target, schema, (result, c) => {
+    if (!result.success) {
+      return c.json({
+        success: false,
+        result: {
+          error: result.error.issues.map((issue) => issue.message).join("\n"),
+        },
+      });
+    }
+  });
 
 export const createUserSchema = z.object({
   full_name: z

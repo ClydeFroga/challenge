@@ -1,12 +1,14 @@
 import { Hono } from "hono";
 import { UserController } from "../../controllers/user.controller.js";
-import { zValidator } from "@hono/zod-validator";
-import { userIdParamSchema } from "../../schemas/user.schema.js";
+import {
+  userIdParamSchema,
+  zValidatorCustom,
+} from "../../schemas/user.schema.js";
 
 export const getUserRoute = (controller: UserController) => {
   const router = new Hono();
 
-  router.get("/", zValidator("param", userIdParamSchema), (c) =>
+  router.get("/", zValidatorCustom("param", userIdParamSchema), (c) =>
     controller.getUserById(c)
   );
 
